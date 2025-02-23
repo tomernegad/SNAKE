@@ -41,6 +41,7 @@ class MAIN:
      def draw_elements(self):
          self.fruit.draw_fruit()
          self.snake.draw_snake()
+         self.draw_score()
 
      def update(self):
          self.snake.move_snake()
@@ -60,19 +61,29 @@ class MAIN:
          if self.snake.body[0] == self.fruit.pos:
              self.snake.add_block()
              self.fruit.randomize()
-                 
+             
+     def draw_score(self):
+         score = str(len(self.snake.body) - 3)
+         score_text = game_font.render(score,True,(64,64,64))
+         pos_x = cell_size * cell_number - 60
+         pos_y = cell_size * cell_number - 40
+         score_rect = score_text.get_rect(center = (pos_x,pos_y))
+         screen.blit(score_text,score_rect)
+         
+pygame.init()               
 cell_size = 30
 cell_number = 20
 
 screen = pygame.display.set_mode((cell_size * cell_number, cell_size * cell_number))
 clock = pygame.time.Clock()
 
-main = MAIN()
+
 apple = pygame.image.load('Graphics/apple.png').convert_alpha()
 SCREEN_UPDATE = pygame.USEREVENT
 pygame.time.set_timer(SCREEN_UPDATE,150)
+game_font = pygame.font.Font('Font/January-Night.ttf',25)
 
-
+main = MAIN()
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
