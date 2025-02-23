@@ -3,13 +3,18 @@ from pygame.math import Vector2
 
 class FRUIT:
     def __init__(self):
-        self.x = random.randint(0,cell_number - 1)
-        self.y = random.randint(0,cell_number -1)
-        self.pos = Vector2(self.x,self.y)
+        self.randomize()
+        
         
     def draw_fruit(self):
         fruit_rect = pygame.Rect(self.pos.x * cell_size,self.pos.y * cell_size,cell_size,cell_size)
         screen.blit(apple,fruit_rect)
+        
+    def randomize(self):
+        self.x = random.randint(0,cell_number - 1)
+        self.y = random.randint(0,cell_number -1)
+        self.pos = Vector2(self.x,self.y)
+        
         
 class SNAKE:
     def __init__(self):
@@ -24,6 +29,9 @@ class SNAKE:
     def move_snake(self):
         self.body.insert(0,self.body[0] + self.direction)
         del self.body[-1]
+    
+    def add_block(self):
+        self.body.insert(0,self.body[0] + self.direction)
         
 class MAIN:
      def __init__(self):
@@ -37,6 +45,7 @@ class MAIN:
      def update(self):
          self.snake.move_snake()
          self.check_fail()
+         self.snake_ate_apple()
          
      def check_fail(self):
          if not( 0 <= self.snake.body[0].x < cell_number and  0 <= self.snake.body[0].y < cell_number):
@@ -46,6 +55,11 @@ class MAIN:
              if self.snake.body[0] == block:
                  pygame.quit()
                  sys.exit()
+                 
+     def snake_ate_apple(self):
+         if self.snake.body[0] == self.fruit.pos:
+             self.snake.add_block()
+             self.fruit.randomize()
                  
 cell_size = 30
 cell_number = 20
