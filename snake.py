@@ -33,7 +33,17 @@ class MAIN:
      def draw_elements(self):
          self.fruit.draw_fruit()
          self.snake.draw_snake()
+
+     def update(self):
+         self.snake.move_snake()
+         self.check_border()
          
+     def check_border(self):
+         if not( 0 <= self.snake.body[0].x < cell_number and  0 <= self.snake.body[0].y < cell_number):
+             pygame.quit()
+             sys.exit()
+              
+            
 
 
 cell_size = 30
@@ -56,7 +66,7 @@ while True:
             pygame.quit()
             sys.exit()
         if event.type == SCREEN_UPDATE:
-            main.snake.move_snake()
+            main.update()
             
         
         if event.type == pygame.KEYDOWN:
