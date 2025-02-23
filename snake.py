@@ -36,23 +36,22 @@ class MAIN:
 
      def update(self):
          self.snake.move_snake()
-         self.check_border()
+         self.check_fail()
          
-     def check_border(self):
+     def check_fail(self):
          if not( 0 <= self.snake.body[0].x < cell_number and  0 <= self.snake.body[0].y < cell_number):
              pygame.quit()
              sys.exit()
-              
-            
-
-
+         for block in self.snake.body[1:]:
+             if self.snake.body[0] == block:
+                 pygame.quit()
+                 sys.exit()
+                 
 cell_size = 30
 cell_number = 20
 
 screen = pygame.display.set_mode((cell_size * cell_number, cell_size * cell_number))
 clock = pygame.time.Clock()
-
-
 
 main = MAIN()
 apple = pygame.image.load('Graphics/apple.png').convert_alpha()
@@ -78,9 +77,7 @@ while True:
                 main.snake.direction = Vector2(1,0)
            elif event.key == pygame.K_LEFT:
                 main.snake.direction = Vector2(-1,0)
-            
-
-          
+                     
     screen.fill((175,215,70))
     main.draw_elements()
     pygame.display.update()
