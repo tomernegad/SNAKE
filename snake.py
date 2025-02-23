@@ -38,6 +38,8 @@ clock = pygame.time.Clock()
 fruit = FRUIT()
 snake = SNAKE()
 apple = pygame.image.load('Graphics/apple.png').convert_alpha()
+SCREEN_UPDATE = pygame.USEREVENT
+pygame.time.set_timer(SCREEN_UPDATE,150)
 
 
 while True:
@@ -45,11 +47,12 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+        if event.type == SCREEN_UPDATE:
+            snake.move_snake()
 
           
     screen.fill((175,215,70))
     fruit.draw_fruit()
     snake.draw_snake()
-    snake.move_snake()
     pygame.display.update()
     clock.tick(60)
