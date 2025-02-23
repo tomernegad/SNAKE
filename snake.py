@@ -9,7 +9,8 @@ class FRUIT:
         
     def draw_fruit(self):
         fruit_rect = pygame.Rect(self.pos.x * cell_size,self.pos.y * cell_size,cell_size,cell_size)
-        pygame.draw.rect(screen,(239,11,11),fruit_rect)
+        screen.blit(apple,fruit_rect)
+
 
 cell_size = 30
 cell_number = 20
@@ -17,7 +18,9 @@ cell_number = 20
 screen = pygame.display.set_mode((cell_size * cell_number, cell_size * cell_number))
 clock = pygame.time.Clock()
 
+
 fruit = FRUIT()
+apple = pygame.image.load('Graphics/apple.png').convert_alpha()
 
 while True:
     for event in pygame.event.get():
